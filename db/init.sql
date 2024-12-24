@@ -5,15 +5,15 @@ CREATE TABLE IF NOT EXISTS pin (
     label TEXT NOT NULL,
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
-    notes TEXT,
-)
+    notes TEXT
+);
 
-CREATE TABLE segment (
+CREATE TABLE IF NOT EXISTS segment (
     id SERIAL PRIMARY KEY,
     pin_from INT NOT NULL,
     pin_to INT NOT NULL,
-    from_date DATETIME,
-    to_date DATETIME,
+    from_date DATE,
+    to_date DATE,
     FOREIGN KEY (pin_from) REFERENCES pin(id),
     FOREIGN KEY (pin_to) REFERENCES pin(id)
 );

@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model pin {
+  id                            Int       @id @default(autoincrement())
+  created_date                  DateTime  @db.Date
+  label                         String
+  latitude                      Float
+  longitude                     Float
+  notes                         String?
+  segment_segment_pin_fromTopin segment[] @relation("segment_pin_fromTopin")
+  segment_segment_pin_toTopin   segment[] @relation("segment_pin_toTopin")
+}
+
+model segment {
+  id                        Int       @id @default(autoincrement())
+  pin_from                  Int
+  pin_to                    Int
+  from_date                 DateTime? @db.Date
+  to_date                   DateTime? @db.Date
+  pin_segment_pin_fromTopin pin       @relation("segment_pin_fromTopin", fields: [pin_from], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  pin_segment_pin_toTopin   pin       @relation("segment_pin_toTopin", fields: [pin_to], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
